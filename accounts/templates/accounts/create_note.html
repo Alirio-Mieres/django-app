@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Note</title>
+    <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'notes' %}">Back to Notes</a>
+        <a href="{% url 'edit_account' %}">Edit Profile</a>
+        <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+    </nav>
+
+    <div class="create-note-container">
+        <h1>Create a New Note</h1>
+        <form method="POST" action="{% url 'create_note' %}">
+            {% csrf_token %}
+            <textarea name="content" placeholder="Write your note here..." required></textarea>
+            <button type="submit">Save Note</button>
+        </form>
+    </div>
+</body>
+</html>
