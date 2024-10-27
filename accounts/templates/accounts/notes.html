@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Notes</title>
+    <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'edit_account' %}">Edit Profile</a>
+        <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+    </nav>
+
+    <div class="notes-grid">
+        {% for note in notes %}
+        <div class="note">
+            <form method="POST" action="{% url 'save_note' note.id %}">
+                {% csrf_token %}
+                <textarea name="content">{{ note.content }}</textarea>
+                <button type="submit">Save</button>
+            </form>
+            <form method="POST" action="{% url 'delete_note' note.id %}">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="new-note">
+        <a href="{% url 'create_note' %}">Add New Note</a>
+    </div>
+</body>
+</html>
